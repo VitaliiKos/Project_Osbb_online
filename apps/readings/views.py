@@ -3,6 +3,7 @@ from rest_framework.generics import DestroyAPIView, GenericAPIView, ListAPIView,
 from rest_framework.response import Response
 
 from apps.meter.serialezers import MeterReadingsSerializer
+from apps.readings.filters import MeterReadingFilter
 from apps.readings.models import MeterReadingsModel, MeterReadingsPhotoModel
 from apps.readings.serializer import MeterReadingsPhotoSerializer
 
@@ -10,6 +11,7 @@ from apps.readings.serializer import MeterReadingsPhotoSerializer
 class MeterReadingsListCreateView(ListAPIView):
     queryset = MeterReadingsModel.objects.all()
     serializer_class = MeterReadingsSerializer
+    filterset_class = MeterReadingFilter
 
 
 class MeterReadingsRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):

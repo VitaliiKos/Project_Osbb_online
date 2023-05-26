@@ -6,7 +6,6 @@ from rest_framework.response import Response
 
 from core.permissions.block_unblock_permission import BlockUnblockUserPermission
 from core.permissions.is_superuser import IsAdminUser, IsSuperUser
-from core.services.email_service import EmailService
 
 from apps.users.models import UserModel as User
 
@@ -95,9 +94,6 @@ class UnblockUserView(GenericAPIView):
     def patch(self, *args, **kwargs):
         user = self.get_object()
 
-        if not self.request.user.is_staff or (user.is_staff and not self.request.user.is_superuser):
-            return Response('permission denied', status.HTTP_403_FORBIDDEN)
-
         if user.is_active:
             return Response('Error occurred while unblocking the user.', status=status.HTTP_400_BAD_REQUEST)
 
@@ -114,11 +110,9 @@ class BlockAdminView(GenericAPIView):
     def patch(self, *args, **kwargs):
         user = self.get_object()
 
-        if not user.is_staff:
-            return Response('Error occurred. User is not an admin!', status=status.HTTP_400_BAD_REQUEST)
-
         if not user.is_active:
             return Response('Error occurred while blocking the user.', status=status.HTTP_400_BAD_REQUEST)
+
         user.is_active = False
         user.save()
         serializer = UserSerializer(user)

@@ -28,6 +28,7 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
 class ProfileModel(models.Model):
     class Meta:
         db_table = 'profile'
+        ordering = ('apartment_number',)
 
     name = models.CharField(max_length=20, validators=[V.RegexValidator(RegEx.NAME.pattern, RegEx.NAME.msg)])
     surname = models.CharField(max_length=20, validators=[V.RegexValidator(RegEx.SURNAME.pattern, RegEx.SURNAME.msg)])
