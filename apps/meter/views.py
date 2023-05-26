@@ -6,13 +6,15 @@ from rest_framework.response import Response
 from apps.meter.models import MeterModel
 from apps.readings.serializer import MeterReadingsSerializer
 
+from .filters import MeterFilter
 from .serialezers import MeterSerializer
 
 
 class MeterListCreateView(ListCreateAPIView):
     queryset = MeterModel.objects.all()
     serializer_class = MeterSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = (IsAuthenticated,)
+    filterset_class = MeterFilter
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
