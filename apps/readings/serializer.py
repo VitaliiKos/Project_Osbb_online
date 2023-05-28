@@ -27,4 +27,3 @@ class MeterReadingsSerializer(ModelSerializer):
     class Meta:
         model = MeterReadingsModel
         fields = ('id', 'reading', 'meter', 'photos', 'created_at', 'updated_at')
-

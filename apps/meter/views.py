@@ -35,7 +35,6 @@ class MeterCreateListReadingsView(CreateAPIView):
         serializer.save(meter=meter)
 
     def get(self, *args, **kwargs):
-        # print(self.request.user.is_active)
         meter = self.get_object()
         serializer = self.serializer_class(meter.readings, many=True)
         return Response(serializer.data, status.HTTP_200_OK)

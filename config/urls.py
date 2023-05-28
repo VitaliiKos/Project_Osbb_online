@@ -19,9 +19,10 @@ from django.conf.urls.static import static
 from django.urls import include, path
 
 urlpatterns = [
+    path('auth', include('apps.auth.urls')),
     path('users', include('apps.users.urls')),
     path('meters', include('apps.meter.urls')),
     path('readings', include('apps.readings.urls')),
-    path('auth', include('apps.auth.urls')),
+    path('advertisement', include('apps.advertisement.urls')),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

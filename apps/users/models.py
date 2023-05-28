@@ -36,10 +36,4 @@ class ProfileModel(models.Model):
     age = models.IntegerField(validators=[V.MinValueValidator(18), V.MaxValueValidator(150)])
     apartment_number = models.IntegerField(validators=[V.MinValueValidator(1), V.MaxValueValidator(400)])
     avatar = models.ImageField(upload_to=upload_to, blank=True)
-    # electricity_meter = models.ForeignKey(MeterModel, on_delete=models.CASCADE, related_name='electricity_meter',
-    #                                       blank=True, default='sr0000')
-    # gas_meter = models.ForeignKey(MeterModel, on_delete=models.CASCADE, related_name='gas_meter', blank=True,
-    #                               default='sr0000')
-    # water_meter = models.ForeignKey(MeterModel, on_delete=models.CASCADE, related_name='water_meter', blank=True,
-    #                                 default='sr0000')
     user = models.OneToOneField(UserModel, on_delete=models.CASCADE, related_name='profile')

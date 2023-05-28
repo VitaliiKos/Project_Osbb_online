@@ -11,4 +11,3 @@ class MeterSerializer(ModelSerializer):
     class Meta:
         model = MeterModel
         fields = ('id', 'serial_number', 'type', 'readings', 'user', 'created_at', 'updated_at')
-        read_only_fields = ('cars', 'user')

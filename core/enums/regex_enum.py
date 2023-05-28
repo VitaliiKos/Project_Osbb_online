@@ -24,34 +24,6 @@ class RegEx(Enum):
         r'^\d{9}$',
         'invalid phone number Ex. 97 999 99 99 '
     )
-    BRAND = (
-        r'^[a-zA-Z]{2,20}$',
-        'min 2 max 20ch'
-    )
-    OIL = (
-        r'^[a-zA-Z]{2,20}$',
-        'min 2 max 20ch'
-    )
-    GEARBOX = (
-        r'^[a-zA-Z]{2,20}$',
-        'min 2 max 20ch'
-    )
-    CAR_MODEL = (
-        r'^[a-zA-Z0-9]{2,20}$',
-        'min 2 max 20ch'
-    )
-    CAR_BODY = (
-        r'^[a-zA-Z]{2,20}$',
-        'min 2 max 20ch'
-    )
-    PROF_NAME = (
-        r'^[a-zA-Z]{2,20}$',
-        'only letters min 2 max 20 ch'
-    )
-    SELLER_DIRECTION = (
-        r'^[a-zA-Z]{2,20}$',
-        'only letters min 2 max 20 ch'
-    )
     METER_SERIAL_NUMBER = (
         r'^[a-zA-Z0-9]{6}$',
         'serial number must contain 6 characters or digits with no space',
@@ -63,6 +35,10 @@ class RegEx(Enum):
     METER_READINGS = (
         r'^\d{6}$',
         'readings is 6 characters with no space',
+    )
+    ADVERTISEMENT_TITLE = (
+        r'^[a-zA-Z0-9А-ЯҐЄІЇа-яєії -]{2,50}$',
+        'only letters min 2 max 50 ch'
     )
 
     def __init__(self, pattern: str, msg: str | list[str]):
