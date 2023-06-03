@@ -40,6 +40,10 @@ class RegEx(Enum):
         r'^[a-zA-Z0-9А-ЯҐЄІЇа-яєії -]{2,50}$',
         'only letters min 2 max 50 ch'
     )
+    NEWS_TITLE = (
+        r'^[a-zA-Z0-9А-ЯҐЄІЇа-яєії -]{2,50}$',
+        'only letters min 2 max 50 ch'
+    )
     POLL_QUESTION = (
         r'^[a-zA-Z0-9А-ЯҐЄІЇа-яєії !?.()~#№$*+=,,-]{1,150}$',
         'only letters min 2 max 150 ch'

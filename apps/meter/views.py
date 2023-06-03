@@ -1,6 +1,6 @@
 from rest_framework import status
 from rest_framework.generics import CreateAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from apps.meter.models import MeterModel
@@ -17,7 +17,6 @@ class MeterListCreateView(ListCreateAPIView):
     filterset_class = MeterFilter
 
     def perform_create(self, serializer):
-        print(self.request.user)
         serializer.save(user=self.request.user)
 
 

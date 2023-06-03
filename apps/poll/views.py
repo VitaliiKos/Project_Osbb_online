@@ -37,9 +37,6 @@ class PollDestroyView(DestroyAPIView):
 
     def destroy(self, request, *args, **kwargs):
         poll = self.get_object()
-        if not poll.user['is_staff']:
-            return Response(status=status.HTTP_403_FORBIDDEN)
-
         self.perform_destroy(poll)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
