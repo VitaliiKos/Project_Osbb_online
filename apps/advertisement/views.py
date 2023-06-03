@@ -24,7 +24,6 @@ class AdvertisementCreateView(CreateAPIView):
     permission_classes = (IsAuthenticated,)
 
     def perform_create(self, serializer):
-        print(self.request.user)
         serializer.save(user=self.request.user)
 
 
@@ -36,11 +35,11 @@ class AdvertisementRetrieveView(RetrieveAPIView):
 
 class AdvertisementDestroyView(DestroyAPIView):
     queryset = AdvertisementModel.objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = (IsAuthenticated,)
 
     def destroy(self, request, *args, **kwargs):
         advertisement = self.get_object()
-        if (advertisement.user != request.user) or advertisement.user['is_staff']:
+        if (advertisement.user != request.user) or not advertisement.user['is_staff']:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
         self.perform_destroy(advertisement)

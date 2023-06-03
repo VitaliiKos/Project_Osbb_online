@@ -24,5 +24,6 @@ urlpatterns = [
     path('meters', include('apps.meter.urls')),
     path('readings', include('apps.readings.urls')),
     path('advertisement', include('apps.advertisement.urls')),
+    path('poll', include('apps.poll.urls')),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

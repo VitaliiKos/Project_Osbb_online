@@ -40,6 +40,10 @@ class RegEx(Enum):
         r'^[a-zA-Z0-9А-ЯҐЄІЇа-яєії -]{2,50}$',
         'only letters min 2 max 50 ch'
     )
+    POLL_QUESTION = (
+        r'^[a-zA-Z0-9А-ЯҐЄІЇа-яєії !?.()~#№$*+=,,-]{1,150}$',
+        'only letters min 2 max 150 ch'
+    )
 
     def __init__(self, pattern: str, msg: str | list[str]):
         self.pattern = pattern

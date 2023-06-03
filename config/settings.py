@@ -52,7 +52,8 @@ INSTALLED_APPS = [
     'apps.users',
     'apps.meter',
     'apps.readings',
-    'apps.advertisement'
+    'apps.advertisement',
+    'apps.poll',
 ]
 
 MIDDLEWARE = [
