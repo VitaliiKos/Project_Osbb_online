@@ -54,14 +54,15 @@ class PollCreateListVoteView(ListCreateAPIView):
 
     def perform_create(self, serializer):
         poll_id = self.kwargs['pk']
-        data = self.request.data
+        user = self.request.user
+        user_vote_status = VoteModel.objects.filter(user_id=user.id)
+        if user_vote_status:
+            return "You have already voted "
         poll = get_object_or_404(PollModel, id=poll_id)
-
         choices_data = self.request.data.get('choice')
         get_object_or_404(PollModel, id=poll_id)
         choice = get_object_or_404(ChoiceModel, id=choices_data, poll_id=poll_id)
         print('!!!!!63!!!!!!!',choice)
-        # choice = ChoiceModel.objects.get(id=choices_data)
         serializer.save(user=self.request.user, poll=poll, choice=choice)
 
 
