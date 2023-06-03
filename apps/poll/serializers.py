@@ -1,6 +1,6 @@
 from django.db import transaction
 
-from rest_framework.serializers import ModelSerializer, RelatedField
+from rest_framework.serializers import ModelSerializer, RelatedField, SerializerMethodField
 
 from core.dataclasses.choice_dataclass import Choice
 
@@ -14,9 +14,21 @@ class ChoiceRelatedFieldSerializer(RelatedField):
 
 
 class ChoiceSerializer(ModelSerializer):
+    percent = SerializerMethodField()
+
     class Meta:
         model = ChoiceModel
-        fields = ['id', 'choice_text']
+        fields = ['id', 'percent', 'choice_text']
+
+    def get_percent(self, obj):
+        total = VoteModel.objects.filter(poll=obj.poll).count()
+        current = VoteModel.objects.filter(poll=obj.poll, choice=obj).count()
+        print(current)
+
+        if total != 0:
+            return float(current * 100 / total)
+        else:
+            return float(0)
 
 
 class PollSerializer(ModelSerializer):
@@ -35,7 +47,6 @@ class PollSerializer(ModelSerializer):
 
 
 class VoteSerializer(ModelSerializer):
-    # choice = ChoiceRelatedFieldSerializer(many=True, read_only=True)
 
     class Meta:
         model = VoteModel

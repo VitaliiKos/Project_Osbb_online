@@ -15,7 +15,7 @@ from apps.poll.serializers import PollSerializer, VoteSerializer
 
 
 class PollListView(ListAPIView):
-    queryset = PollModel.objects.all()
+    queryset = PollModel.objects.filter(visible=True)
     serializer_class = PollSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -48,38 +48,17 @@ class PollCreateListVoteView(ListCreateAPIView):
     """
     List of votes
     """
-    queryset = VoteModel.objects.all()
     serializer_class = VoteSerializer
     permission_classes = (IsAuthenticated,)
 
     def perform_create(self, serializer):
         poll_id = self.kwargs['pk']
-        user = self.request.user
-        user_vote_status = VoteModel.objects.filter(user_id=user.id)
-        if user_vote_status:
-            return "You have already voted "
         poll = get_object_or_404(PollModel, id=poll_id)
+        user = self.request.user
+        user_vote_status = VoteModel.objects.filter(user_id=user.id, poll_id=poll_id)
+        if user_vote_status:
+            return Response("You have already voted ")
         choices_data = self.request.data.get('choice')
         get_object_or_404(PollModel, id=poll_id)
         choice = get_object_or_404(ChoiceModel, id=choices_data, poll_id=poll_id)
-        print('!!!!!63!!!!!!!',choice)
         serializer.save(user=self.request.user, poll=poll, choice=choice)
-
-
-    # def get_queryset(self):
-    #     return VoteModel.objects.filter(user=self.request.user)
-    #
-    # def perform_create(self, serializer):
-    #     poll_id = self.kwargs['pk']
-    #     poll = PollModel.objects.get(id=poll_id)
-    #     choices_data = self.request.data.get('choice')
-    #     user = self.request.user
-    #
-    #     choice = ChoiceModel.objects.get(id=choices_data)
-    #     VoteModel.objects.create(user=user, poll=poll, choice=choice)
-    #
-    # def create(self, request, *args, **kwargs):
-    #     poll_id = kwargs.get('pk')
-    #     get_object_or_404(PollModel, id=poll_id)
-    #
-    #     return super().create(request, *args, **kwargs)

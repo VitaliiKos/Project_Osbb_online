@@ -14,11 +14,10 @@ class PollModel(models.Model):
         db_table = 'poll'
         ordering = ('created_at',)
 
-    question = models.CharField(max_length=150
-                                , validators=[
-            V.RegexValidator(RegEx.POLL_QUESTION.pattern, RegEx.POLL_QUESTION.msg)]
-                                )
+    question = models.CharField(max_length=150, validators=[
+        V.RegexValidator(RegEx.POLL_QUESTION.pattern, RegEx.POLL_QUESTION.msg)])
     description = models.TextField(blank=True)
+    visible = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
