@@ -7,10 +7,10 @@ from rest_framework.generics import (
     RetrieveAPIView,
     get_object_or_404,
 )
-from rest_framework.permissions import IsAdminUser, IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 
-from .models import CommentsModel, NewsModel
+from .models import NewsModel
 from .serializers import CommentSerializer, NewsSerializer
 
 
@@ -40,11 +40,6 @@ class NewsDestroyView(DestroyAPIView):
 
     def destroy(self, request, *args, **kwargs):
         news = self.get_object()
-        # user = self.request.user['is_staff']
-        # print('#####36######', user)
-        # if not self.request.user['is_staff']:
-        #     return Response(status=status.HTTP_403_FORBIDDEN)
-
         self.perform_destroy(news)
         return Response(status=status.HTTP_204_NO_CONTENT)
 

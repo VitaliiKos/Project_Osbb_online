@@ -23,6 +23,7 @@ class NewsModel(models.Model):
     def __str__(self):
         return self.title
 
+
 class CommentsModel(models.Model):
     class Meta:
         db_table = 'news_comments'

@@ -23,6 +23,7 @@ class MeterListCreateView(ListCreateAPIView):
 class MeterRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = MeterModel.objects.all()
     serializer_class = MeterSerializer
+    permission_classes = (IsAuthenticated, )
 
 
 class MeterCreateListReadingsView(CreateAPIView):

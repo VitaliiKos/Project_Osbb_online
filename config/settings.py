@@ -54,7 +54,8 @@ INSTALLED_APPS = [
     'apps.readings',
     'apps.advertisement',
     'apps.poll',
-    'apps.news'
+    'apps.news',
+    'apps.fault_message'
 ]
 
 MIDDLEWARE = [
