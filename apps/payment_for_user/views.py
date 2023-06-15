@@ -11,44 +11,6 @@ from ..readings.models import MeterReadingsModel
 from .models import PaymentModel
 from .serializers import PaymentSerializer
 
-# class PaymentListCreateView(ListCreateAPIView):
-#     serializer_class = PaymentSerializer
-#     permission_classes = (IsAuthenticated,)
-#
-#     def get_queryset(self):
-#         return PaymentModel.objects.filter(user_id=self.request.user.id)
-#
-#     def perform_create(self, serializer):
-#         current_date = datetime.now()
-#         meter = MeterModel.objects.get(id=self.kwargs['pk'], user_id=self.request.user.id)
-#         meter_type = get_object_or_404(MeterTypeModel, id=meter.meter_specify_id)
-#         readings = MeterReadingsModel.objects.get_readings_by_meter_id(meter.id)[:2]
-#
-#         previous_reading = readings[1]
-#         current_reading = readings[0]
-#
-#         current_reading_month = current_reading.created_at.month
-#
-#         if current_date.month != current_reading_month:
-#             raise ValidationError('You have not provided a current score')
-#             # return Response('You have not provided a current score', status=status.HTTP_404_NOT_FOUND)
-#
-#         payment = PaymentModel.objects.filter(user_id=self.request.user.id).first()
-#         if payment and current_date.month == payment.created_at.month and current_date.year == payment.created_at.year:
-#             serializer = self.get_serializer(payment)
-#             return Response(serializer.data, status=status.HTTP_200_OK)
-#
-#         energy_usage = current_reading.reading - previous_reading.reading
-#         total_amount = energy_usage * meter_type.price
-#         serializer.save(
-#             user=self.request.user,
-#             meter_type=meter_type,
-#             previous_reading=previous_reading,
-#             current_reading=current_reading,
-#             energy_usage=energy_usage,
-#             unit_price=meter_type.price,
-#             total_amount=total_amount,
-#         )
 
 class PaymentListCreateView(ListCreateAPIView):
     serializer_class = PaymentSerializer
