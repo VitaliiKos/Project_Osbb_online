@@ -6,10 +6,10 @@ from rest_framework.generics import ListCreateAPIView, get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from ..meter.models import MeterModel, MeterTypeModel
+from ..meter.models import MeterModel, MeterTypeModel, StandardMeterTypeModel
 from ..readings.models import MeterReadingsModel
-from .models import PaymentModel
-from .serializers import PaymentSerializer
+from .models import PaymentModel, StandardPaymentModel
+from .serializers import PaymentSerializer, StandardPaymentSerializer
 
 
 class PaymentListCreateView(ListCreateAPIView):
@@ -44,6 +44,7 @@ class PaymentListCreateView(ListCreateAPIView):
         total_amount = energy_usage * meter_type.price
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+
         serializer.save(
             user=self.request.user,
             meter_type=meter_type,
@@ -54,3 +55,36 @@ class PaymentListCreateView(ListCreateAPIView):
             total_amount=total_amount,
         )
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class StandardPaymentListCreateView(ListCreateAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = StandardPaymentSerializer
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return StandardPaymentModel.objects.all()
+        return StandardPaymentModel.objects.filter(user_id=self.request.user.id)
+
+    def post(self, request, *args, **kwargs):
+        current_date = datetime.now()
+        standard_meter_type = StandardMeterTypeModel.objects.all()
+        for meter in standard_meter_type:
+            payment = StandardPaymentModel.objects.filter(user_id=self.request.user.id,
+                                                          standard_meter_type_id=meter.id).first()
+
+            if payment and \
+                    (current_date.month != payment.created_at.month or
+                     (current_date.month == payment.created_at.month and current_date.year != payment.created_at.year)):
+                print(payment and
+                      (current_date.month != payment.created_at.month or
+                       current_date.month == payment.created_at.month and current_date.year == payment.created_at.year))
+
+                serializer = self.get_serializer(data=request.data)
+                serializer.is_valid(raise_exception=True)
+
+                serializer.save(
+                    user=self.request.user,
+                    standard_meter_type=meter,
+                )
+        return Response(status=status.HTTP_201_CREATED)

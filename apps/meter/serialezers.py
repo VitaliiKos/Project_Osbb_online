@@ -5,6 +5,12 @@ from apps.readings.serializer import MeterReadingsSerializer
 from .models import MeterModel, MeterPhotoModel, MeterTypeModel
 
 
+class StandardMeterTypeSerializer(ModelSerializer):
+    class Meta:
+        model = MeterTypeModel
+        fields = ('id', 'specify', 'price')
+
+
 class MeterTypeSerializer(ModelSerializer):
     class Meta:
         model = MeterTypeModel

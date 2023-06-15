@@ -10,6 +10,15 @@ from apps.users.models import UserModel as User
 UserModel: User = get_user_model()
 
 
+class StandardMeterTypeModel(models.Model):
+    class Meta:
+        db_table = 'standard_meter_type'
+        ordering = ('id',)
+
+    specify = models.CharField(max_length=150, unique=True)
+    price = models.FloatField()
+
+
 class MeterTypeModel(models.Model):
     class Meta:
         db_table = 'meter_type'
@@ -17,9 +26,6 @@ class MeterTypeModel(models.Model):
 
     specify = models.CharField(max_length=150, unique=True)
     price = models.FloatField()
-
-    # def __str__(self):
-    #     return self.__dict__
 
 
 class MeterModel(models.Model):

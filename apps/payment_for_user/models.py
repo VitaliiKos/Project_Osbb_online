@@ -1,17 +1,36 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
-from apps.meter.models import MeterModel, MeterTypeModel
+from apps.meter.models import MeterModel, MeterTypeModel, StandardMeterTypeModel
+from apps.readings.managers import StandardMeterPymentManager
 from apps.readings.models import MeterReadingsModel
 from apps.users.models import UserModel as User
 
 UserModel: User = get_user_model()
 
 
+class StandardPaymentModel(models.Model):
+    """
+    Receipt generation for standard service
+    """
+
+    class Meta:
+        db_table = 'standard_payment'
+        ordering = ('-created_at',)
+
+    standard_meter_type = models.ForeignKey(StandardMeterTypeModel, on_delete=models.CASCADE,
+                                            related_name='standard_payment')
+    user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    objects = StandardMeterPymentManager.as_manager()
+
+
 class PaymentModel(models.Model):
     """
     Receipt generation for each service
     """
+
     class Meta:
         db_table = 'payment'
         ordering = ('-created_at',)

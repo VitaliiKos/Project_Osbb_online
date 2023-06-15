@@ -1,6 +1,13 @@
 from rest_framework.serializers import ModelSerializer
 
-from .models import MainUsersPaymentModel, PaymentModel
+from .models import MainUsersPaymentModel, PaymentModel, StandardPaymentModel
+
+
+class StandardPaymentSerializer(ModelSerializer):
+    class Meta:
+        model = StandardPaymentModel
+        fields = ('id', 'standard_meter_type', 'user', 'created_at')
+        read_only_fields = ('user', 'standard_meter_type', 'created_at')
 
 
 class PaymentSerializer(ModelSerializer):
@@ -10,7 +17,7 @@ class PaymentSerializer(ModelSerializer):
             'id', 'previous_reading', 'current_reading', 'energy_usage', 'unit_price', 'total_amount', 'user',
             'created_at', 'meter_type')
         read_only_fields = (
-        'user', 'previous_reading', 'current_reading', 'energy_usage', 'unit_price', 'total_amount', 'meter_type')
+            'user', 'previous_reading', 'current_reading', 'energy_usage', 'unit_price', 'total_amount', 'meter_type')
 
 
 class MainUsersPaymentSerializer(ModelSerializer):
