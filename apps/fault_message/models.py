@@ -12,7 +12,7 @@ UserModel: User = get_user_model()
 class FaultModel(models.Model):
     class Meta:
         db_table = 'fault_msg'
-        ordering = ('created_at',)
+        ordering = ('-created_at',)
 
     title = models.CharField(max_length=250, validators=[
         V.RegexValidator(RegEx.FAULT_TITLE.pattern, RegEx.FAULT_TITLE.msg)])
@@ -29,7 +29,7 @@ class FaultModel(models.Model):
 class FaultCommentModel(models.Model):
     class Meta:
         db_table = 'fault_comment'
-        ordering = ('created_at',)
+        ordering = ('-created_at',)
 
     comment_body = models.TextField()
     fault_msg = models.ForeignKey(FaultModel, on_delete=models.CASCADE, related_name='comments')

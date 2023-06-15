@@ -13,7 +13,7 @@ UserModel: User = get_user_model()
 class AdvertisementModel(models.Model):
     class Meta:
         db_table = 'advertisement'
-        ordering = ('created_at',)
+        ordering = ('-created_at',)
 
     title = models.CharField(max_length=50, validators=[
         V.RegexValidator(RegEx.ADVERTISEMENT_TITLE.pattern, RegEx.ADVERTISEMENT_TITLE.msg)])

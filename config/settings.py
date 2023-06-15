@@ -55,7 +55,8 @@ INSTALLED_APPS = [
     'apps.advertisement',
     'apps.poll',
     'apps.news',
-    'apps.fault_message'
+    'apps.fault_message',
+    'apps.payment_for_user',
 ]
 
 MIDDLEWARE = [

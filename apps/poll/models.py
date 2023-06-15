@@ -12,7 +12,7 @@ UserModel: User = get_user_model()
 class PollModel(models.Model):
     class Meta:
         db_table = 'poll'
-        ordering = ('created_at',)
+        ordering = ('-created_at',)
 
     question = models.CharField(max_length=150, validators=[
         V.RegexValidator(RegEx.POLL_QUESTION.pattern, RegEx.POLL_QUESTION.msg)])

@@ -1,29 +1,19 @@
-from rest_framework.serializers import ModelSerializer, RelatedField
+from rest_framework.serializers import ModelSerializer
 
-from core.dataclasses.meter_dataclass import Meter
+from .models import MeterReadingsModel
 
-from .models import MeterReadingsModel, MeterReadingsPhotoModel
-
-
-class MeterRelatedFieldSerializer(RelatedField):
-
-    def to_representation(self, value: Meter):
-        return {'id': value.id, 'serial_number': value.serial_number, 'type': value.type}
+# from core.dataclasses.meter_dataclass import Meter
 
 
-class MeterReadingsPhotoSerializer(ModelSerializer):
-    class Meta:
-        model = MeterReadingsPhotoModel
-        fields = ('id', 'photo',)
-
-    def to_representation(self, instance):
-        return instance.photo.url
+# class MeterRelatedFieldSerializer(RelatedField):
+#
+#     def to_representation(self, value: Meter):
+#         return {'id': value.id, 'serial_number': value.serial_number}
+#
 
 
 class MeterReadingsSerializer(ModelSerializer):
-    meter = MeterRelatedFieldSerializer(read_only=True)
-    photos = MeterReadingsPhotoSerializer(many=True, read_only=True)
-
     class Meta:
         model = MeterReadingsModel
-        fields = ('id', 'reading', 'meter', 'photos', 'created_at', 'updated_at')
+        fields = ('id', 'reading', 'meter', 'user', 'created_at', 'updated_at')
+        read_only_fields = ('meter', 'user')

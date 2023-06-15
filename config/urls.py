@@ -27,5 +27,6 @@ urlpatterns = [
     path('poll', include('apps.poll.urls')),
     path('news', include('apps.news.urls')),
     path('fault_msg', include('apps.fault_message.urls')),
+    path('payment', include('apps.payment_for_user.urls')),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
