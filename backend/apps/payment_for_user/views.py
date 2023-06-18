@@ -6,13 +6,22 @@ from rest_framework.generics import ListCreateAPIView, get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from ..meter.models import MeterModel, MeterTypeModel, StandardMeterTypeModel
-from ..readings.models import MeterReadingsModel
+from apps.meter.models import MeterModel, MeterTypeModel, StandardMeterTypeModel
+from apps.readings.models import MeterReadingsModel
+
 from .models import PaymentModel, StandardPaymentModel
 from .serializers import PaymentSerializer, StandardPaymentSerializer
 
 
 class PaymentListCreateView(ListCreateAPIView):
+    """
+        get:
+            Get authorization user's list of payment
+            or
+            get all list of payments if user.is_staff == True
+        post:
+            Create new payment
+    """
     serializer_class = PaymentSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -58,6 +67,15 @@ class PaymentListCreateView(ListCreateAPIView):
 
 
 class StandardPaymentListCreateView(ListCreateAPIView):
+    """
+        get:
+            Get authorization user's list of standard payment
+            or
+            get all list of payments if user.is_staff == True
+        post:
+            Create new payment
+    """
+
     permission_classes = (IsAuthenticated,)
     serializer_class = StandardPaymentSerializer
 

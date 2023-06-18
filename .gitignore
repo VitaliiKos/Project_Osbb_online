@@ -4,3 +4,4 @@ venv
 storage
 setup.cfg
 mysql
+backend/static

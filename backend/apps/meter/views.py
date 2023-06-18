@@ -13,12 +13,14 @@ from rest_framework.response import Response
 from apps.meter.models import MeterModel, MeterPhotoModel, MeterTypeModel
 from apps.readings.serializer import MeterReadingsSerializer
 
-from ..readings.models import MeterReadingsModel
 from .filters import MeterFilter
 from .serialezers import MeterPhotoSerializer, MeterSerializer, MeterTypeSerializer
 
 
 class MeterListView(ListAPIView):
+    """
+        Get user's meters or get all meters if user.is_staff==True
+    """
     serializer_class = MeterSerializer
     permission_classes = (IsAuthenticated,)
     filterset_class = MeterFilter
@@ -31,7 +33,11 @@ class MeterListView(ListAPIView):
 
 
 class UserMeterCreateView(CreateAPIView):
+    """
+        Create user's meter by type of meter
+    """
     serializer_class = MeterSerializer
+    queryset = MeterModel.objects.all()
     permission_classes = (IsAuthenticated,)
     filterset_class = MeterFilter
 
@@ -47,6 +53,16 @@ class UserMeterCreateView(CreateAPIView):
 
 
 class MeterRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
+    """
+       get:
+           Get meter by id
+       patch:
+           Partial update meter by id
+       put:
+           Full update meter by id
+       delete:
+           Delete meter by id
+       """
     serializer_class = MeterSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -55,6 +71,12 @@ class MeterRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
 
 
 class MeterCreateListReadingsView(CreateAPIView):
+    """
+        get:
+            Get meter by id
+        post:
+            Create meter's reading
+    """
     queryset = MeterModel.objects.all()
     serializer_class = MeterReadingsSerializer
     permission_classes = (IsAuthenticated,)
@@ -70,24 +92,47 @@ class MeterCreateListReadingsView(CreateAPIView):
 
 
 class MeterTypeListView(ListAPIView):
+    """
+        Get meter's type list
+    """
     queryset = MeterTypeModel.objects.all()
     serializer_class = MeterTypeSerializer
     permission_classes = (IsAuthenticated,)
 
 
 class MeterTypeCreateView(CreateAPIView):
+    """
+        Create meter's type
+    """
     serializer_class = MeterTypeSerializer
     permission_classes = (IsAdminUser,)
 
 
-class MeterTypeRetrieveDestroyView(RetrieveUpdateDestroyAPIView):
+class MeterTypeRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
+    """
+        get:
+            Get meter's type by id
+        patch:
+            Partial update meter's type by id
+        put:
+            Full update meter's type by id
+        delete:
+            Delete meter's type by id
+    """
     queryset = MeterTypeModel.objects.all()
     serializer_class = MeterTypeSerializer
     permission_classes = (IsAdminUser,)
 
 
 class MeterPhotoCreateView(GenericAPIView):
+    """
+        Add photo for meter
+    """
     queryset = MeterPhotoModel.objects.all()
+    permission_classes = (IsAuthenticated,)
+
+    def get_serializer(self, *args, **kwargs):
+        pass
 
     def post(self, *args, **kwargs):
         files = self.request.FILES
@@ -101,7 +146,11 @@ class MeterPhotoCreateView(GenericAPIView):
 
 
 class MeterPhotoDeleteView(DestroyAPIView):
+    """
+        Delete meter's photo
+    """
     queryset = MeterPhotoModel.objects.all()
+    permission_classes = (IsAuthenticated,)
 
     def perform_destroy(self, instance):
         instance.photo.delete()

@@ -3,7 +3,7 @@ from rest_framework.serializers import ModelSerializer
 from .models import CommentsModel, NewsModel
 
 
-class CommentSerializer(ModelSerializer):
+class NewsCommentSerializer(ModelSerializer):
     class Meta:
         model = CommentsModel
         fields = ['id', 'comment_body', 'news', 'user', 'created_at']
@@ -11,7 +11,7 @@ class CommentSerializer(ModelSerializer):
 
 
 class NewsSerializer(ModelSerializer):
-    comments = CommentSerializer(many=True, read_only=True)
+    comments = NewsCommentSerializer(many=True, read_only=True)
 
     class Meta:
         model = NewsModel

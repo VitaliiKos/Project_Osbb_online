@@ -15,23 +15,35 @@ from apps.poll.serializers import PollSerializer, VoteSerializer
 
 
 class PollListView(ListAPIView):
+    """
+        List of poll
+    """
     queryset = PollModel.objects.filter(visible=True)
     serializer_class = PollSerializer
     permission_classes = (IsAuthenticated,)
 
 
 class PollCreateView(CreateAPIView):
+    """
+        Create new poll
+    """
     serializer_class = PollSerializer
     permission_classes = (IsAdminUser,)
 
 
 class PollRetrieveView(RetrieveAPIView):
+    """
+        Get poll by id
+    """
     queryset = PollModel.objects.all()
     serializer_class = PollSerializer
     permission_classes = (IsAuthenticated,)
 
 
 class PollDestroyView(DestroyAPIView):
+    """
+        Destroy poll by id
+    """
     queryset = PollModel.objects.all()
     permission_classes = (IsAdminUser,)
 
@@ -43,8 +55,12 @@ class PollDestroyView(DestroyAPIView):
 
 class PollCreateListVoteView(ListCreateAPIView):
     """
-    List of votes
+    get:
+        List of votes
+    post:
+        Add vote
     """
+    queryset = PollModel.objects.all()
     serializer_class = VoteSerializer
     permission_classes = (IsAuthenticated,)
 

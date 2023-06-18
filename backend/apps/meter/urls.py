@@ -8,7 +8,7 @@ from .views import (
     MeterRetrieveUpdateDestroyView,
     MeterTypeCreateView,
     MeterTypeListView,
-    MeterTypeRetrieveDestroyView,
+    MeterTypeRetrieveUpdateDestroyView,
     UserMeterCreateView,
 )
 
@@ -20,7 +20,7 @@ urlpatterns = [
 
     path('/type', MeterTypeListView.as_view(), name='meter_type_list'),
     path('/type/create', MeterTypeCreateView.as_view(), name='meter_type_create_list'),
-    path('/type/<int:pk>', MeterTypeRetrieveDestroyView.as_view(), name='meter_type_update_destroy'),
+    path('/type/<int:pk>', MeterTypeRetrieveUpdateDestroyView.as_view(), name='meter_type_update_destroy'),
 
     path('/<int:pk>/photo', MeterPhotoCreateView.as_view(), name='meter_add_photo'),
     path('/photo/<int:pk>', MeterPhotoDeleteView.as_view(), name='meterReading_photo_delete'),

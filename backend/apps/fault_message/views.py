@@ -14,6 +14,12 @@ from .serializers import FaultCommentsSerializer, FaultSerializer
 
 
 class FaultListCreateView(ListCreateAPIView):
+    """
+    get:
+        Get fault list
+    post:
+        Create fault msg
+    """
     queryset = FaultModel.objects.all()
     serializer_class = FaultSerializer
     permission_classes = (IsAuthenticated,)
@@ -23,12 +29,26 @@ class FaultListCreateView(ListCreateAPIView):
 
 
 class FaultRetrieveView(RetrieveUpdateAPIView):
+    """
+    get:
+        Get fault by id
+    patch:
+        Partial update fault by id
+    put:
+        Full update fault by id
+    """
     queryset = FaultModel.objects.all()
     serializer_class = FaultSerializer
     permission_classes = (IsAuthenticated,)
 
 
 class FaultCommentListCreateView(ListCreateAPIView):
+    """
+    get:
+        Get fault's comments
+    post:
+        Create fault's comment
+    """
     queryset = FaultModel.objects.all()
     serializer_class = FaultCommentsSerializer
     permission_classes = (IsAuthenticated,)
@@ -45,7 +65,16 @@ class FaultCommentListCreateView(ListCreateAPIView):
 
 
 class FaultCommentUpdateDestroyView(RetrieveUpdateDestroyAPIView):
-    # queryset = FaultCommentModel.objects.all()
+    """
+    get:
+        Get fault's comment by id
+    patch:
+        Partial update fault's comment by id
+    put:
+        Full update fault's comment by id
+    delete:
+        Delete fault's comment by id
+    """
     serializer_class = FaultCommentsSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -54,8 +83,12 @@ class FaultCommentUpdateDestroyView(RetrieveUpdateDestroyAPIView):
 
 
 class FaultChangeStatusToDoneView(GenericAPIView):
+    """
+        Change fault's msg status to done
+    """
     queryset = FaultModel.objects.all()
     permission_classes = (IsAdminUser,)
+    serializer_class = FaultSerializer
 
     def patch(self, *args, **kwargs):
         fault_msg = self.get_object()
@@ -68,8 +101,12 @@ class FaultChangeStatusToDoneView(GenericAPIView):
 
 
 class FaultChangeStatusToActiveView(GenericAPIView):
+    """
+    Change fault's msg status to active
+    """
     queryset = FaultModel.objects.all()
     permission_classes = (IsAdminUser,)
+    serializer_class = FaultSerializer
 
     def patch(self, *args, **kwargs):
         fault_msg = self.get_object()

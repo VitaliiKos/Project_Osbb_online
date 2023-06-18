@@ -11,7 +11,7 @@ from .views import (
 
 urlpatterns = [
     path('', FaultListCreateView.as_view(), name='fault_list_create'),
-    path('/<int:pk>/update', FaultRetrieveView.as_view(), name='fault_get_retrieve'),
+    path('/<int:pk>', FaultRetrieveView.as_view(), name='fault_get_retrieve'),
     path('/<int:pk>/comments', FaultCommentListCreateView.as_view(), name='fault_comments_create_list'),
     path('/comments/<int:pk>', FaultCommentUpdateDestroyView.as_view(), name='fault_comments_update'),
 

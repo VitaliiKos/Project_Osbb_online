@@ -9,16 +9,29 @@ from apps.advertisement.models import AdvertisementModel, AdvertisementPhotoMode
 from apps.advertisement.serializers import AdvertisementPhotoSerializer, AdvertisementSerializer
 from apps.users.models import UserModel as User
 
+from .swagger.decorators import (
+    activate_advertisement_swagger,
+    advertisement_add_photo_swagger,
+    advertisement_list_swagger,
+)
+
 UserModel: User = get_user_model()
 
 
+@advertisement_list_swagger()
 class AdvertisementListView(ListAPIView):
+    """
+    Advertisement list
+    """
     queryset = AdvertisementModel.objects.all()
     serializer_class = AdvertisementSerializer
     permission_classes = (AllowAny,)
 
 
 class AdvertisementCreateView(CreateAPIView):
+    """
+    Create advertisement
+    """
     queryset = AdvertisementModel.objects.all()
     serializer_class = AdvertisementSerializer
     permission_classes = (IsAuthenticated,)
@@ -28,12 +41,18 @@ class AdvertisementCreateView(CreateAPIView):
 
 
 class AdvertisementRetrieveView(RetrieveAPIView):
+    """
+    Partial Advertisement
+    """
     queryset = AdvertisementModel.objects.all()
     serializer_class = AdvertisementSerializer
     permission_classes = (AllowAny,)
 
 
 class AdvertisementDestroyView(DestroyAPIView):
+    """
+    Destroy Advertisement
+    """
     queryset = AdvertisementModel.objects.all()
     permission_classes = (IsAuthenticated,)
 
@@ -46,8 +65,15 @@ class AdvertisementDestroyView(DestroyAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+@advertisement_add_photo_swagger()
 class AdvertisementAddPhotosView(GenericAPIView):
+    """
+    Add photo to the advertisement
+    """
     queryset = AdvertisementModel.objects.all()
+
+    def get_serializer(self, *args, **kwargs):
+        pass
 
     def post(self, *args, **kwargs):
         files = self.request.FILES
@@ -57,10 +83,13 @@ class AdvertisementAddPhotosView(GenericAPIView):
             serializer.is_valid(raise_exception=True)
             serializer.save(advertisement=advertisement)
         serializer = AdvertisementSerializer(advertisement)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class AdvertisementPhotoDeleteView(DestroyAPIView):
+    """
+    Delete advertisement's photo
+    """
     queryset = AdvertisementPhotoModel.objects.all()
 
     def perform_destroy(self, instance):
@@ -68,9 +97,16 @@ class AdvertisementPhotoDeleteView(DestroyAPIView):
         super().perform_destroy(instance)
 
 
+@activate_advertisement_swagger()
 class ActivateAdvertisementView(GenericAPIView):
+    """
+    Change advertisement's status to active
+    """
     permission_classes = (IsAdminUser,)
     queryset = AdvertisementModel.objects.all()
+
+    def get_serializer(self, *args, **kwargs):
+        pass
 
     def patch(self, *args, **kwargs):
         advertisement = self.get_object()
