@@ -1,0 +1,21 @@
+.carousel_image_presentation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.carousel_image_presentation .carousel .slider-wrapper.axis-horizontal .slider{
+    height: 350px;
+}
+
+.carousel_image_presentation .carousel-slider img {
+    height: 100%;
+}
+
+li.thumb {
+    height: 60px;
+}
+
+li.thumb img {
+    height: 100%;
+}
