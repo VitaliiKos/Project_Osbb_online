@@ -1,4 +1,7 @@
 import React, {useState} from 'react';
+import {NavLink} from "react-router-dom";
+import {useDispatch} from "react-redux";
+
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
@@ -10,8 +13,6 @@ import Tooltip from '@mui/material/Tooltip';
 // import FavoriteIcon from '@mui/icons-material/Favorite';
 import Logout from '@mui/icons-material/Logout';
 import {Settings} from "@mui/icons-material";
-import {NavLink} from "react-router-dom";
-import {useDispatch} from "react-redux";
 
 import {RouterEndpoints} from "../../routes";
 import {userActions} from "../../redux";

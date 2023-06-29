@@ -1,8 +1,8 @@
 import {Outlet} from "react-router-dom";
 
 import {Header} from "../../components";
-import css from './mainLayout.module.css';
 import {Footer} from "../../pages";
+import css from './mainLayout.module.css';
 
 const MainLayout = () => {
     return (
