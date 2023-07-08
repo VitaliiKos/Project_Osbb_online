@@ -66,17 +66,17 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         logOut: (state) => {
-            authService.deleteTokens()
-            state.statusIsAuthenticated = false
+            authService.deleteTokens();
+            state.statusIsAuthenticated = false;
         },
         setStatusIsAuthenticated: (state, action) => {
-            state.statusIsAuthenticated = action.payload
+            state.statusIsAuthenticated = action.payload;
         },
 
     },
     extraReducers: builder => builder
         .addCase(myProfile.fulfilled, (state, action) => {
-            state.avatar_img = action.payload.profile.avatar
+            state.avatar_img = action.payload.profile.avatar;
             state.user_profile = action.payload;
 
         })

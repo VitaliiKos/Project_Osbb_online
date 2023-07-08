@@ -28,9 +28,13 @@ const mainUrls = {
     },
     advertisement: {
         advertisement,
+        byId: (id) => `${advertisement}/${id}`,
+        addPhoto: (id) => `${advertisement}/${id}`,
+
     },
     poll: {
         poll,
+        byId: (id) => `${poll}/${id}`,
     },
     meters: {
         meters,
@@ -38,6 +42,7 @@ const mainUrls = {
 
     news: {
         news,
+        byId: (id) => `${news}/${id}`,
     },
 
     fault_msg: {

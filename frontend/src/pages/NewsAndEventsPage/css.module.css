@@ -1,0 +1,20 @@
+.wrapper {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 10px;
+}
+
+.newsWrapper {
+    width: 45%;
+    border: 2px solid #2aabd2;
+}
+
+.newsForm {
+
+}
+
+.pollWrapper {
+    width: 45%;
+    border: 2px solid #2aabd2;
+}

@@ -1,0 +1,13 @@
+.inputWrapper{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    gap: 10px;
+
+    border: 2px solid green;
+    box-sizing: border-box;
+    padding: 10px;
+}
+.inputWrapper input{}
+.formWrapper{}
+.addRemoveChoice{}

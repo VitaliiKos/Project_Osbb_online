@@ -4,6 +4,7 @@ import {unstable_HistoryRouter as BrowserRouter} from "react-router-dom";
 import {Provider} from "react-redux";
 
 import {setupStore} from "./redux";
+
 import {history} from "./services";
 import App from './App';
 import './index.css';

@@ -15,6 +15,7 @@ const RegisterPage = () => {
             await registerService.create(user)
             navigate('/login/msg')
         } catch (e) {
+
             setError(e.response.data.detail)
         }
     }

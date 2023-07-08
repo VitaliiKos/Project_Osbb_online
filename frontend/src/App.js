@@ -1,6 +1,6 @@
 import {Route, Routes} from "react-router-dom";
 
-import {MainLayout} from "./layouts";
+import {AuthRequireLayout, MainLayout} from "./layouts";
 import {
     AboutPage,
     HomePage,
@@ -18,10 +18,13 @@ function App() {
             <Routes>
                 <Route path={RouterEndpoints.index} element={<MainLayout/>}>
                     <Route path={RouterEndpoints.index} index element={<HomePage/>}/>
-                    <Route path={RouterEndpoints.osbb} index element={<AboutPage/>}/>
-                    <Route path={RouterEndpoints.rent_and_services} index element={<RentAndServicesPage/>}/>
-                    <Route path={RouterEndpoints.news_and_events} index element={<NewsAndEventsPage/>}/>
-                    <Route path={RouterEndpoints.profile} index element={<PersonalUserPage/>}/>
+                    <Route path={RouterEndpoints.osbb} element={<AboutPage/>}/>
+                    <Route path={RouterEndpoints.rent_and_services} element={<RentAndServicesPage/>}/>
+
+                    <Route path={RouterEndpoints.news_and_events} element={<NewsAndEventsPage/>}/>
+                    <Route element={<AuthRequireLayout/>}>
+                        <Route path={RouterEndpoints.profile} element={<PersonalUserPage/>}/>
+                    </Route>
 
                     <Route path={RouterEndpoints.login} element={<LoginPage/>}/>
                     <Route path={RouterEndpoints.register} element={<RegisterPage/>}/>
