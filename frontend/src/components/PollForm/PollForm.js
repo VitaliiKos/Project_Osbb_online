@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useForm} from "react-hook-form";
 
 import {useDispatch, useSelector} from "react-redux";
@@ -6,25 +6,21 @@ import {pollActions} from "../../redux";
 import css from './pollForm.module.css'
 
 const PollForm = ({setStatusPoll}) => {
-    const initialChoicesData = {
-        question: 'Тема', description: 'Опис', choices: [{choice_text: 'Cтворіть варіант'}],
-    };
     const {pollForUpdate} = useSelector(state => state.polls);
     const dispatch = useDispatch();
     const {register, handleSubmit, setValue, reset} = useForm();
-    const [choicesData, setChoicesData] = useState(initialChoicesData);
 
 
     useEffect(() => {
         if (pollForUpdate) {
-            setValue('question', choicesData.question);
-            setValue('description', choicesData.description);
-            choicesData.choices.forEach((choice, index) => {
+            setValue('question', pollForUpdate.question);
+            setValue('description', pollForUpdate.description);
+            pollForUpdate.choices.forEach((choice, index) => {
                 setValue(`choices[${index}].choice_text`, choice.choice_text);
             });
 
         }
-    }, [setChoicesData, setValue, choicesData])
+    }, [setValue])
 
 
     const onSubmit = (poll) => {
@@ -33,36 +29,16 @@ const PollForm = ({setStatusPoll}) => {
             dispatch(pollActions.updatePoll({pollId, poll}));
             dispatch(pollActions.setPollForUpdate(null))
         } else {
-            dispatch(pollActions.createPoll(poll))
+            console.log(poll)
+            dispatch(pollActions.createPoll({poll}))
 
         }
         reset()
-        resetChoicesData()
         setStatusPoll(false)
         dispatch(pollActions.getAll({'page': 1}))
-
-
         console.log(poll);
     };
 
-
-    const addNewChoice = () => {
-        const newChoice = {'choice_text': ''};
-        setChoicesData(prevState => ({...prevState, choices: [...prevState.choices, newChoice]}));
-        console.log(choicesData)
-    }
-
-    const removeChoice = (index) => {
-        const newChoices = choicesData.choices;
-        newChoices.splice(index, 1);
-        console.log(index)
-        console.log(newChoices)
-        setChoicesData(prevState => ({...prevState, choices: newChoices}));
-        console.log(choicesData)
-    };
-    const resetChoicesData = () => {
-        setChoicesData(initialChoicesData);
-    };
     return (
 
         <div>
@@ -78,10 +54,13 @@ const PollForm = ({setStatusPoll}) => {
                         </div>
 
                         <div>
-                            {choicesData.choices.map((choice, index) => (<div key={index}>
-                                <input type="text" {...register(`choices[${index}].choice_text`)}
-                                       placeholder={'choice text'}/>
-                            </div>))}
+                            <input type="text" {...register(`choices[${0}].choice_text`)} defaultValue={'За'}/>
+                        </div>
+                         <div>
+                            <input type="text" {...register(`choices[${1}].choice_text`)} defaultValue={'Проти'}/>
+                        </div>
+                         <div>
+                            <input type="text" {...register(`choices[${2}].choice_text`)} defaultValue={'Нейтрально'}/>
                         </div>
 
                     </div>
@@ -89,13 +68,6 @@ const PollForm = ({setStatusPoll}) => {
                 </form>
             </div>
 
-            <div className={css.addRemoveChoice}>
-                {choicesData.choices.map((choice, index) => (<div key={index}>
-                    <button onClick={() => removeChoice(index)}>-</button>
-                </div>))}
-
-                <button onClick={() => addNewChoice()}>Додати варіант</button>
-            </div>
         </div>);
 };
 export {PollForm};

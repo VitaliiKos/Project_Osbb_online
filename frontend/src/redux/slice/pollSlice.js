@@ -36,6 +36,7 @@ const createPoll = createAsyncThunk(
     'pollSlice/createPoll',
     async ({poll}, thunkAPI) => {
         try {
+            console.log(poll)
             await pollService.add(poll)
             thunkAPI.dispatch(getAll({'page': 1}));
         } catch (e) {
